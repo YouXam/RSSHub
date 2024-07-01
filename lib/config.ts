@@ -1,5 +1,5 @@
-import 'dotenv/config';
 import randUserAgent from '@/utils/rand-user-agent';
+import 'dotenv/config';
 import { ofetch } from 'ofetch';
 
 let envs = process.env;
@@ -156,7 +156,6 @@ export type Config = {
         username?: string;
         password?: string;
         bearertoken?: string;
-        iap_receipt?: string;
     };
     instagram: {
         username?: string;
@@ -232,6 +231,9 @@ export type Config = {
     pkubbs: {
         cookie?: string;
     };
+    qingting: {
+        id?: string;
+    };
     saraba1st: {
         cookie?: string;
     };
@@ -249,18 +251,24 @@ export type Config = {
         clientSecret?: string;
         refreshToken?: string;
     };
+    sspai: {
+        bearertoken?: string;
+    };
     telegram: {
         token?: string;
     };
     tophub: {
         cookie?: string;
     };
+    tsdm39: {
+        cookie: string;
+    };
     twitter: {
-        oauthTokens?: string[];
-        oauthTokenSecrets?: string[];
-        username?: string;
-        password?: string;
+        username?: string[];
+        password?: string[];
+        authenticationSecret?: string[];
         cookie?: string;
+        authToken?: string[];
     };
     weibo: {
         app_key?: string;
@@ -281,8 +289,15 @@ export type Config = {
     ximalaya: {
         token?: string;
     };
+    xsijishe: {
+        cookie?: string;
+    };
     xueqiu: {
         cookies?: string;
+    };
+    yamibo: {
+        salt?: string;
+        auth?: string;
     };
     youtube: {
         key?: string;
@@ -295,6 +310,9 @@ export type Config = {
     };
     zodgame: {
         cookie?: string;
+    };
+    zsxq: {
+        accessToken?: string;
     };
 };
 
@@ -503,7 +521,6 @@ const calculateValue = () => {
             username: envs.INITIUM_USERNAME,
             password: envs.INITIUM_PASSWORD,
             bearertoken: envs.INITIUM_BEARER_TOKEN,
-            iap_receipt: envs.INITIUM_IAP_RECEIPT,
         },
         instagram: {
             username: envs.IG_USERNAME,
@@ -579,6 +596,9 @@ const calculateValue = () => {
         pkubbs: {
             cookie: envs.PKUBBS_COOKIE,
         },
+        qingting: {
+            id: envs.QINGTING_ID,
+        },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
         },
@@ -596,6 +616,9 @@ const calculateValue = () => {
             clientSecret: envs.SPOTIFY_CLIENT_SECRET,
             refreshToken: envs.SPOTIFY_REFRESHTOKEN,
         },
+        sspai: {
+            bearertoken: envs.SSPAI_BEARERTOKEN,
+        },
         telegram: {
             token: envs.TELEGRAM_TOKEN,
             session: envs.TELEGRAM_SESSION,
@@ -606,12 +629,15 @@ const calculateValue = () => {
         tophub: {
             cookie: envs.TOPHUB_COOKIE,
         },
+        tsdm39: {
+            cookie: envs.TSDM39_COOKIES,
+        },
         twitter: {
-            oauthTokens: envs.TWITTER_OAUTH_TOKEN?.split(','),
-            oauthTokenSecrets: envs.TWITTER_OAUTH_TOKEN_SECRET?.split(','),
-            username: envs.TWITTER_USERNAME,
-            password: envs.TWITTER_PASSWORD,
+            username: envs.TWITTER_USERNAME?.split(','),
+            password: envs.TWITTER_PASSWORD?.split(','),
+            authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
             cookie: envs.TWITTER_COOKIE,
+            authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
         },
         weibo: {
             app_key: envs.WEIBO_APP_KEY,
@@ -632,8 +658,15 @@ const calculateValue = () => {
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,
         },
+        xsijishe: {
+            cookie: envs.XSIJISHE_COOKIE,
+        },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,
+        },
+        yamibo: {
+            salt: envs.YAMIBO_SALT,
+            auth: envs.YAMIBO_AUTH,
         },
         youtube: {
             key: envs.YOUTUBE_KEY,
@@ -646,6 +679,9 @@ const calculateValue = () => {
         },
         zodgame: {
             cookie: envs.ZODGAME_COOKIE,
+        },
+        zsxq: {
+            accessToken: envs.ZSXQ_ACCESS_TOKEN,
         },
     };
 
