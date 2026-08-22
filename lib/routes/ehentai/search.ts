@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+
 import EhAPI from './ehapi';
 
 export const route: Route = {
     path: '/search/:params?/:page?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/search/f_search=artist%3Amana%24/1',
-    parameters: { params: 'Search parameters. You can copy the content after `https://e-hentai.org/?`', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
+    example: '/ehentai/search/f_cats=1021/0/bittorrent=true&embed_thumb=false',
+    parameters: { params: 'Search parameters. You can copy the content after `https://e-hentai.org/?`', page: 'Page number, set 0 to get latest', routeParams: 'Additional parameters, see the table above' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -14,6 +15,7 @@ export const route: Route = {
         supportBT: true,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Search',
     maintainers: ['yindaheng98', 'syrinka'],
@@ -24,8 +26,8 @@ async function handler(ctx) {
     const page = ctx.req.param('page');
     let params = ctx.req.param('params');
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-    const bittorrent = routeParams.get('bittorrent') || false;
-    const embed_thumb = routeParams.get('embed_thumb') || false;
+    const bittorrent = (routeParams.get('bittorrent') || false) as unknown as boolean;
+    const embed_thumb = (routeParams.get('embed_thumb') || false) as unknown as boolean;
     let items;
     if (page) {
         // 如果定义了page，就要覆盖params

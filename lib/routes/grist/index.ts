@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Language, Route } from '@/types';
+
 import { getData, getList } from './utils';
 
 export const route: Route = {
@@ -8,8 +9,11 @@ export const route: Route = {
             source: ['grist.org/articles/'],
         },
     ],
-    name: 'Unknown',
+    name: 'Latest Articles',
     maintainers: ['Rjnishant530'],
+    categories: ['new-media'],
+    example: '/grist',
+    parameters: {},
     handler,
     url: 'grist.org/articles/',
 };
@@ -28,6 +32,6 @@ async function handler() {
         description: 'Latest Articles on grist.org',
         logo: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=192',
         icon: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=32',
-        language: 'en-us',
+        language: 'en-us' as Language,
     };
 }

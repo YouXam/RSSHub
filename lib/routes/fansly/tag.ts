@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Language, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { getTagId, getTagSuggestion, findAccountById, parseDescription, baseUrl, icon } from './utils';
+
+import { baseUrl, findAccountById, getTagId, getTagSuggestion, icon, parseDescription } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -15,6 +15,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -29,13 +30,13 @@ export const route: Route = {
 async function handler(ctx) {
     const tag = ctx.req.param('tag');
 
-    const tagId = await getTagId(tag, cache.tryGet);
+    const tagId = await getTagId(tag);
     const suggestion = await getTagSuggestion(tagId);
 
     const items = suggestion.aggregationData?.posts.map((post) => {
         const account = findAccountById(post.accountId, suggestion.aggregationData.accounts);
         return {
-            title: post.content.split('\n')[0],
+            title: post.content.split('\n', 1)[0],
             description: parseDescription(post, suggestion.aggregationData),
             pubDate: parseDate(post.createdAt, 'X'),
             link: `${baseUrl}/post/${post.id}`,
@@ -49,7 +50,7 @@ async function handler(ctx) {
         image: icon,
         icon,
         logo: icon,
-        language: 'en',
+        language: 'en' as Language,
         item: items,
     };
 }

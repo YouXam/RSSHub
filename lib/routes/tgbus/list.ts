@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { parseArticle } from './utils';
 
 type Category = 'news' | 'review' | 'video' | 'special' | 'hardware';
@@ -33,8 +34,8 @@ export const route: Route = {
     maintainers: ['Xzonn'],
     handler,
     description: `| 最新资讯 | 游戏评测 | 游戏视频 | 巴士首页特稿 | 硬件资讯 |
-    | -------- | -------- | -------- | ------------ | -------- |
-    | news     | review   | video    | special      | hardware |`,
+| -------- | -------- | -------- | ------------ | -------- |
+| news     | review   | video    | special      | hardware |`,
 };
 
 async function handler(ctx) {
@@ -56,7 +57,7 @@ async function handler(ctx) {
             };
         });
 
-    const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const out = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: `${categories[category]} - 电玩巴士`,
